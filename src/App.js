@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import WebcamViewer from './WebcamViewer';
 
-function App() {
+const App = () => {
+  const [messages, setMessages] = useState([]);
+
+  const handlePredictions = (predictions) => {
+    const newMessage = predictions.map((prediction) => prediction.className).join(', ');
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="messages">
+        {messages.map((message, index) => (
+          <div key={index}>{message}</div>
+        ))}
+      </div>
+      <WebcamViewer onPredictions={handlePredictions} />
     </div>
   );
-}
+};
 
 export default App;
