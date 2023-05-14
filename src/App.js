@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { runObjectDetection } from './controller/ImageAnalyser';
+import './App.css';
 
 const App = () => {
+
+  const [isAnalysing, setAnalysing] = useState(false);
   const videoRef = useRef(null);
   const [isRecording, setIsRecording] = useState(true);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -26,6 +29,7 @@ const App = () => {
       const incomingPredictions = await runObjectDetection(capturedImage);
       console.log("Predictions: ", incomingPredictions);
       setPredictions(incomingPredictions);
+      setAnalysing(false);
     };
 
     if (capturedImage) {
@@ -34,6 +38,7 @@ const App = () => {
   }, [capturedImage]);
 
   const takePicture = () => {
+    setAnalysing(true);
     const canvas = document.createElement('canvas');
     canvas.width = videoRef.current.videoWidth;
     canvas.height = videoRef.current.videoHeight;
@@ -60,7 +65,11 @@ const App = () => {
               <video ref={videoRef} autoPlay playsInline style={{ width: '100%', height: '100%' }}></video>
             )}
             <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
-              {capturedImage ? (
+              { isAnalysing ? (
+                <div className="loading-spinner">
+                  <div className="spinner"></div>
+                </div>
+              ) : (capturedImage ? (
                 <button onClick={retakePicture} style={{ borderRadius: '360px', backgroundColor: 'red', color: 'white', width: '75px', height: '75px', padding: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid black' }}>
                   Restart
                 </button>
@@ -68,7 +77,7 @@ const App = () => {
                 <button onClick={takePicture} style={{ borderRadius: '360px', backgroundColor: 'green', color: 'white', width: '75px', height: '75px', padding: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid black' }}>
                   Analyse
                 </button>
-              )}
+              ))}
             </div>
           </div>
         </div>
