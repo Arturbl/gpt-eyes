@@ -23,3 +23,23 @@
     transform: rotate(360deg);
   }
 }
+
+.optionsBtn {
+  display: inline-block;
+  width: 35%;
+  background: #000;
+  border-radius: 150px;
+  padding: 10px;
+  margin-right: 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.optionsBtn:hover {
+  background: #333;
+}
+
+.optionsBtn:focus {
+  outline: none;
+}

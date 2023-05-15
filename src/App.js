@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { runObjectDetection } from './controller/ImageAnalyser';
 import './App.css';
+import { askGpt } from './controller/gpt';
 
 const App = () => {
 
@@ -84,14 +85,17 @@ const App = () => {
       </div>
 
       <div style={{ flex: '1', padding: '20px', backgroundColor: '#fff', overflowY: 'auto' }}>
-        <div style={{ height: '100%', border: '1px solid #ccc', padding: '10px' }}>
+        <div style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '100%' }}>
+          
           {predictions.map((message, index) => (
-            <div key={index}>
-              <p>{message.className}</p>
-            </div>
+            <button className='optionsBtn' type="button" key={index} onClick={() => askGpt(message.className)}>
+              {message.className}
+            </button>
           ))}
+
         </div>
       </div>
+ 
     </div>
   );
 };
