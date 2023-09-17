@@ -86,13 +86,11 @@ const App = () => {
 
       <div style={{ flex: '1', padding: '20px', backgroundColor: '#fff', overflowY: 'auto' }}>
         <div style={{ overflowX: 'scroll', whiteSpace: 'nowrap', height: '100%' }}>
-          
           {predictions.map((message, index) => (
             <button className='optionsBtn' type="button" key={index} onClick={() => askGpt(message.className)}>
               {message.className}
             </button>
           ))}
-
         </div>
       </div>
  
